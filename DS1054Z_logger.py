@@ -32,37 +32,37 @@ MODEL = 1
 SERIAL = 2
 
 
-# Print usage
+# print(usage
 def print_help():
-    print
-    print "This program periodically reads the Vavg measured"
-    print "    for all 4 channels of a Rigol DS1054Z oscilloscope."
-    print
-    print "    The reading time interval (in seconds) can be specified"
-    print "    in the command line. A timestamp is added for each new reading."
-    print
-    print "    At each new reading, the Vavg values for each channel"
-    print "    are listed in CSV format, then saved in a log file. The log file"
-    print '    is saved as "MODEL_YYYY-MM-DD_HH.MM.SS.csv"'
-    print
-    print "The program is using LXI protocol, so the computer"
-    print "    must have LAN connection with the DS1054Z instrument."
-    print "    USB and/or GPIB connections are not used by this software."
-    print
-    print "    No VISA, IVI or Rigol drivers are needed."
-    print
-    print "Usage syntax:"
-    print "    " + "python " + scriptName + " [read_interval [instrument_IP]]"
-    print
-    print "Usage examples:"
-    print "    " + "python " + scriptName + "                   # log outputs (1s, 192.168.1.3)"
-    print "    " + "python " + scriptName + " 60                # log at each minute (192.168.1.3)"
-    print "    " + "python " + scriptName + " 3600 192.168.1.7  # log hourly from IP 192.168.1.7"
-    print
-    print "To end the logging, press 'ESC'."
-    print
-    print
-    print
+    print()
+    print("This program periodically reads the Vavg measured")
+    print("    for all 4 channels of a Rigol DS1054Z oscilloscope.")
+    print()
+    print("    The reading time interval (in seconds) can be specified")
+    print("    in the command line. A timestamp is added for each new reading.")
+    print()
+    print("    At each new reading, the Vavg values for each channel")
+    print("    are listed in CSV format, then saved in a log file. The log file")
+    print('    is saved as "MODEL_YYYY-MM-DD_HH.MM.SS.csv"')
+    print()
+    print("The program is using LXI protocol, so the computer")
+    print("    must have LAN connection with the DS1054Z instrument.")
+    print("    USB and/or GPIB connections are not used by this software.")
+    print()
+    print("    No VISA, IVI or Rigol drivers are needed.")
+    print()
+    print("Usage syntax:")
+    print("    " + "python " + scriptName + " [read_interval [instrument_IP]]")
+    print()
+    print("Usage examples:")
+    print("    " + "python " + scriptName + "                   # log outputs (1s, 192.168.1.3)")
+    print("    " + "python " + scriptName + " 60                # log at each minute (192.168.1.3)")
+    print("    " + "python " + scriptName + " 3600 192.168.1.7  # log hourly from IP 192.168.1.7")
+    print()
+    print("To end the logging, press 'ESC'.")
+    print()
+    print()
+    print()
 
 
 # Check command line parameter(s)
@@ -76,12 +76,12 @@ else:
         logInterval = int(sys.argv[1])
     except Exception:
         print_help()
-        print 'ERROR!!! command line argument "' + sys.argv[1] + '" is not a valid time interval.'
+        print('ERROR!!! command line argument "' + sys.argv[1] + '" is not a valid time interval.')
         sys.exit("ERROR")
 
     if logInterval == 0:
         print_help()
-        print 'ERROR!!! command line argument "' + sys.argv[1] + '" is not a valid time interval.'
+        print('ERROR!!! command line argument "' + sys.argv[1] + '" is not a valid time interval.')
         sys.exit("ERROR")
 
 # Read/verify logging instrument IP
@@ -109,11 +109,11 @@ if len(sys.argv) == 3:
 
     if isError:
         print_help()
-        print 'ERROR!!! command line argument "' + sys.argv[2] + '" is not a valid IPv4 address.'
+        print('ERROR!!! command line argument "' + sys.argv[2] + '" is not a valid IPv4 address.')
         sys.exit("ERROR")
 
 # Connect and check instruments
-print connect_verify("oscilloscope", IP_DS1054Z, port)
+print(connect_verify("oscilloscope", IP_DS1054Z, port))
 telnetToInstrument, idFields = connect_verify("oscilloscope", IP_DS1054Z, port)
 
 fileName = savePath + idFields[MODEL] + "_" + strftime("%Y-%m-%d_%H.%M.%S", localtime())
@@ -121,13 +121,13 @@ if haveMultipleDS1054Zs:
     fileName += "_" + idFields[SERIAL]
 fileName += ".csv"
 
-print
-print 'Logging values in file "' + fileName + '":'
+print()
+print('Logging values in file "' + fileName + '":')
 csvFile = open(fileName, "a")
 csvFile.write(csvHeader + '\n')
 csvFile.close()
-print
-print csvHeader
+print()
+print(csvHeader)
 
 # Logging loop
 while True:
@@ -158,7 +158,7 @@ while True:
     csvFile = open(fileName, "a")
     csvFile.write(csvLine + '\n')
     csvFile.close()
-    print csvLine
+    print(csvLine)
 
     # read pressed key without waiting http://code.activestate.com/recipes/197140/
     if kbhit():                         # Key pressed?
@@ -182,4 +182,4 @@ while True:
 
 # Close telnet sessions and exit
 telnetToInstrument.close()
-print "Normal exit. Bye!"
+print("Normal exit. Bye!")
